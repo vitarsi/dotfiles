@@ -3,6 +3,7 @@
 
 # Set mod key (Mod1=<Alt>, Mod4=<Super>)
 set $mod Mod4
+set $mod2 Mod1
 
 # set default desktop layout (default is tiling)
 # workspace_layout tabbed <stacking|tabbed>
@@ -18,6 +19,7 @@ hide_edge_borders none
 bindsym $mod+u border none
 bindsym $mod+y border pixel 1
 bindsym $mod+n border normal
+title_align center
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -35,7 +37,7 @@ bindsym $mod+q kill
 # start program launcher
 #bindsym $mod+d exec --no-startup-id dmenu_recency
 bindsym $mod+d exec --no-startup-id rofi -show drun
-bindsym $mod+Tab exec --no-startup-id rofi -show window
+bindsym $mod2+Tab exec --no-startup-id rofi -show window
 bindsym $mod+o exec --no-startup-id rofi -show filebrowser
 
 # launch categorized menu
@@ -61,19 +63,26 @@ bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
 # Screen brightness controls
 # bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; notify-send 'brightness up'"
 # bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; notify-send 'brightness down'"
+bindsym $mod2+Up exec "brillo -q -A 2; notify-send 'Brightness Up'"
+bindsym $mod2+Down exec "brillo -q -U 2; notify-send 'Brightness Down'"
 
 # Start Applications
 #bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
-bindsym $mod+F1 exec mousepad ~/.i3/config
-bindsym $mod+F2 exec firefox
-bindsym $mod+F3 exec pcmanfm
-bindsym $mod+F4 exec gnome-calculator
+bindsym $mod+F2 exec vim ~/.i3/config
+bindsym $mod+F1 exec firefox;exec notify-send 'Firefox opening...'
+bindsym $mod+F3 exec pcmanfm;exec notify-send 'Files'
+bindsym $mod+F4 exec gnome-calculator;exec notify-send 'Calculator opening...'
 bindsym $mod+F5 exec sh /home/varav/Documents/scripts/sync_cal.sh
+# bindsym $mod+F9 exec /usr/share/freeoffice/presentations /home/varav/Documents/VA/Work/Parties/Riddles.pps
+# bindsym $mod+F10 exec /usr/share/freeoffice/presentations /home/varav/Documents/VA/Work/Parties/LateralThinking.pps
+# bindsym $mod+F8 exec vlc ~/Videos/SarinSir.mp4 -f
 # bindsym $mod+F3 exec ranger
+bindsym $mod+F9 exec pcmanfm /home/varav/Documents/VA/Work/Parties/HusbandsNight/Project/HusbandsNightFinal
+
 bindsym $mod+Shift+F3 exec pcmanfm_pkexec
 bindsym $mod+F6 exec terminal -e 'mocp'
-bindsym $mod+t exec --no-startup-id pkill picom
-bindsym $mod+Ctrl+t exec --no-startup-id picom -b
+bindsym $mod+t exec --no-startup-id pkill picom;exec notify-send 'Picom killed'
+bindsym $mod+Ctrl+t exec --no-startup-id picom -b;exec notify-send 'Picom started'
 bindsym $mod+Shift+d --release exec "killall dunst; exec notify-send 'restart dunst'"
 bindsym Print exec --no-startup-id i3-scrot
 bindsym $mod+Print --release exec --no-startup-id i3-scrot -w
@@ -113,8 +122,8 @@ bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
 
 # split orientation
-bindsym $mod+h split h;exec notify-send 'tile horizontally'
-bindsym $mod+v split v;exec notify-send 'tile vertically'
+bindsym $mod+h split h;exec notify-send 'Tile horizontally'
+bindsym $mod+v split v;exec notify-send 'Tile vertically'
 bindsym $mod+Shift+q split toggle
 
 # toggle fullscreen mode for the focused container
@@ -127,6 +136,7 @@ bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
+bindsym --whole-window $mod+button2 floating toggle
 
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
@@ -149,6 +159,9 @@ bindsym $mod+Ctrl+Right workspace next
 bindsym $mod+Next workspace next
 bindsym $mod+Ctrl+Left workspace prev
 bindsym $mod+Prior workspace prev
+bindsym $mod+Tab workspace next
+bindsym --whole-window $mod+button5 workspace next_on_output
+bindsym --whole-window $mod+button4 workspace prev_on_output
 
 #Move active workspace to alternate screen
 bindsym $mod+z move workspace to output next
@@ -157,14 +170,23 @@ bindsym $mod+z move workspace to output next
 # to display names or symbols instead of plain workspace numbers you can use
 # something like: set $ws1 1:mail
 #                 set $ws2 2:
-set $ws1 1:🌏
-set $ws2 2:💻
-set $ws3 3:🕶️
-set $ws4 4:📄
-set $ws5 5:🎵
-set $ws6 6:🎨
-set $ws7 7:✏️
-set $ws8 8:🎲
+#set $ws1 1:🌏
+#set $ws2 2:💻
+#set $ws3 3:🕶️
+#set $ws4 4:📄
+#set $ws5 5:🎵
+#set $ws6 6:🎨
+#set $ws7 7:✏️
+#set $ws8 8:🎲
+
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
 
 
 # switch to workspace
@@ -178,14 +200,14 @@ bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 
 # Move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace $ws1
-bindsym $mod+Shift+2 move container to workspace $ws2
-bindsym $mod+Shift+3 move container to workspace $ws3
-bindsym $mod+Shift+4 move container to workspace $ws4
-bindsym $mod+Shift+5 move container to workspace $ws5
-bindsym $mod+Shift+6 move container to workspace $ws6
-bindsym $mod+Shift+7 move container to workspace $ws7
-bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+1 move container to workspace $ws1;exec notify-send 'Moved to Browsers'
+bindsym $mod+Shift+2 move container to workspace $ws2;exec notify-send 'Moved to Terminal'
+bindsym $mod+Shift+3 move container to workspace $ws3;exec notify-send 'Moved to Code'
+bindsym $mod+Shift+4 move container to workspace $ws4;exec notify-send 'Moved to Files'
+bindsym $mod+Shift+5 move container to workspace $ws5;exec notify-send 'Moved to Media'
+bindsym $mod+Shift+6 move container to workspace $ws6;exec notify-send 'Moved to Art'
+bindsym $mod+Shift+7 move container to workspace $ws7;exec notify-send 'Moved to Write'
+bindsym $mod+Shift+8 move container to workspace $ws8;exec notify-send 'Moved to Misc'
 
 # Move to workspace with focused container
 bindsym $mod+Ctrl+1 move container to workspace $ws1; workspace $ws1
@@ -206,6 +228,7 @@ assign [class="Code"] $ws3
 assign [class="Mousepad"] $ws3
 assign [class="Pcmanfm"] $ws4
 assign [class="vlc"] $ws5
+assign [class="Audacity"] $ws5
 assign [class="Gimp-2.10"] $ws6
 
 # Open specific applications in floating mode
@@ -237,11 +260,17 @@ for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
 
+# turn on window icons
+#for_window [all] title_window_icon on
+
+# The middle button and modifier over any part of the window kills the window
+#bindsym --whole-window $mod+button2 kill
+
 # switch to workspace with urgent window automatically
 for_window [urgent=latest] focus
 
 # reload the configuration file
-bindsym $mod+Shift+c reload
+bindsym $mod+Shift+c reload;exec notify-send 'Reload i3 config'
 
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
@@ -267,7 +296,7 @@ mode "$mode_system" {
 }
 
 # Resize window (you can also use the mouse for that)
-bindsym $mod+r mode "resize"
+bindsym $mod+r mode "resize";exec notify-send 'Resize mode'
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
         # Pressing left will shrink the window’s width.
@@ -286,8 +315,8 @@ mode "resize" {
         bindsym Right resize grow width 10 px or 10 ppt
 
         # exit resize mode: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
+        bindsym Return mode "default";exec notify-send 'Exit from Resize'
+        bindsym Escape mode "default";exec notify-send 'Exit from Resize'
 }
 
 # Lock screen
@@ -301,7 +330,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id xfce4-power-manager
 exec --no-startup-id pamac-tray
 exec --no-startup-id clipit
-# exec --no-startup-id blueman-applet
+exec --no-startup-id blueman-applet
 # exec_always --no-startup-id sbxkb
 # exec --no-startup-id start_conky_maia
 # exec --no-startup-id start_conky_green
@@ -340,42 +369,43 @@ set_from_resource $term_color13    color13
 set_from_resource $term_color14    color14
 set_from_resource $term_color15    color15
 
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
-bar {
-	id bar-0
-	i3bar_command i3bar --transparency
-	status_command i3status
-	position top
+#bar {
+#	id bar-0
+#	#i3bar_command i3bar --transparency
+#
+#	status_command i3status
+#	position top
 #	mode hide
-	workspace_min_width 50
-	binding_mode_indicator yes
-	tray_output none
+#	workspace_min_width 50
+#	binding_mode_indicator yes
+#	tray_output none
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
 #	tray_output primary
 #	tray_output eDP1
 
-	bindsym button4 workspace previous
-	bindsym button5 workspace next
-	font xft:URWGothic-Book 8
-	strip_workspace_numbers yes
-
-    colors {
-        background #222D3166
-        statusline #F9FAF9
-        separator  #454947
-
+#	bindsym button4 workspace previous
+#	bindsym button5 workspace next
+#	font xft:URWGothic-Book 8
+#	strip_workspace_numbers yes
+#
+#    colors {
+#        background #222D3166
+#        statusline #F9FAF9
+#        separator  #454947
 #                      border  backgr. text
-        focused_workspace  #F9FAF9 #16a08566 #292F34
-        active_workspace   #595B5B66 #353836 #FDF6E3
-        inactive_workspace #595B5B #222D3166 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
-    }
-}
+#        focused_workspace  #F9FAF9 #16a08566 #292F34
+#        active_workspace   #595B5B66 #353836 #FDF6E3
+#        inactive_workspace #595B5B #222D3166 #EEE8D5
+#        binding_mode       #16a085 #2C2C2C #F9FAF9
+#        urgent_workspace   #16a085 #FDF6E3 #E5201D
+#    }
+#}
 #### bottom bar - only used for tray icons
 bar {
-	id bar-1
-	i3bar_command i3bar --transparency
+#	id bar-1
+#	i3bar_command i3bar #--transparency
 #	status_command i3status
 	position bottom
 	mode hide
@@ -390,7 +420,7 @@ bar {
 	bindsym button4 nop
 	bindsym button5 nop
 #   font xft:URWGothic-Book 11
-	strip_workspace_numbers yes
+#	strip_workspace_numbers yes
 
     colors {
         background #222D31
@@ -398,12 +428,12 @@ bar {
         separator  #454947
 
 #                      border  backgr. text
-        focused_workspace  #F9FAF9 #16a085 #292F34
-        active_workspace   #595B5B #353836 #FDF6E3
-        inactive_workspace #595B5B #222D31 #EEE8D5
-        binding_mode       #16a085 #2C2C2C #F9FAF9
-        urgent_workspace   #16a085 #FDF6E3 #E5201D
-    }
+#        focused_workspace  #F9FAF9 #16a085 #292F34
+#        active_workspace   #595B5B #353836 #FDF6E3
+#        inactive_workspace #595B5B #222D31 #EEE8D5
+#        binding_mode       #16a085 #2C2C2C #F9FAF9
+#        urgent_workspace   #16a085 #FDF6E3 #E5201D
+     }
 }
 
 # hide/unhide i3status bar
